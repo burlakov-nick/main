@@ -20,7 +20,7 @@ function countBombs(x, y) {
     for (let i = 0; i < 8; i++) {
         let nx = x + dx[i]
         let ny = y + dy[i]
-        if (0 <= nx && nx < n && 0 <= ny && ny < m && isBomb[nx][ny]) {
+        if (isInside(nx, ny) && isBomb[nx][ny]) {
             count += 1
         }
     }
