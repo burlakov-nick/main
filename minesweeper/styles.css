@@ -4,7 +4,7 @@
 
 .synth-container {
     display: grid;
-    grid-template-columns: repeat(9, 40px);
+    grid-template-columns: repeat(9, minmax(30px, 1fr));
     background: linear-gradient(145deg, #0f0f1b, #1a1a2e);
     border: 2px solid #00f0ff;
     padding: 20px;
