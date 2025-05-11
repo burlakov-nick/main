@@ -64,8 +64,6 @@ function reveal(x, y) {
     queue.push([x, y])
     for (let k = 0; k < queue.length; k ++) {
         let [x, y] = queue[k]
-        console.log(x, y, isBomb[x][y])
-        console.log(revealed[x][y])
         let cell = document.getElementById(getId(x, y))
         cell.textContent = isBomb[x][y] ? "💣" : bombs[x][y].toString()
         if (isBomb[x][y]) {
