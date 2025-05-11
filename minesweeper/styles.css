@@ -1,0 +1,68 @@
+.synth-background {
+    background: black;
+}
+
+.synth-container {
+    display: grid;
+    grid-template-columns: repeat(9, 40px);
+    background: linear-gradient(145deg, #0f0f1b, #1a1a2e);
+    border: 2px solid #00f0ff;
+    padding: 20px;
+    box-shadow: 0 0 20px #00f0ff;
+    border-radius: 12px;
+    max-width: max-content;
+    margin: auto;
+}
+
+.synth-win {
+    border-color: #00ff88 !important;
+    box-shadow: 0 0 20px #00ff88 !important;
+}
+
+.synth-lose {
+    border-color: #ff0044 !important;
+    box-shadow: 0 0 20px #ff0044 !important;
+}
+
+.synth-cell {
+    background-color: #1a1a2e;
+    border: 1px solid #ff00c8;
+    width: 40px;
+    height: 40px;
+    font-family: 'Orbitron', sans-serif;
+    color: #ffe600;
+    text-align: center;
+    line-height: 40px;
+    box-shadow: 0 0 5px #ff00c8;
+    transition: 0.2s;
+    z-index: 0;
+}
+
+.synth-cell:hover {
+    background-color: #2a2a4a;
+    box-shadow: 0 0 10px #00f0ff;
+    cursor: pointer;
+    z-index: 1;
+}
+
+.synth-revealed {
+    background-color: #0f0f1b;
+    border-color: #00f0ff;
+    color: #00f0ff;
+    box-shadow: inset 0 0 10px #00f0ff;
+}
+
+.synth-mine {
+    background-color: #ff0055;
+    color: #fff;
+    box-shadow: 0 0 15px #ff0055;
+}
+
+.synth-title {
+    font-family: 'Orbitron', sans-serif;
+    color: #ff00c8;
+    text-shadow: 0 0 10px #ff00c8, 0 0 20px #00f0ff;
+    font-size: 2em;
+    text-align: center;
+    margin-bottom: 20px;
+}
