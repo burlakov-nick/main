@@ -138,6 +138,9 @@ function initGame() {
                 }
 
                 if (e.button === 2) {
+                    if (isWin()) {
+                        return;
+                    }
                     if (markedAsBomb[x][y]) {
                         unmarkAsBomb(x, y)
                     } else {
@@ -151,6 +154,11 @@ function initGame() {
                         placeBombs()
                     }
                     isFirstClick = false
+
+                    if (isWin() && isBomb[x][y]) {
+                        return;
+                    }
+
                     if (isBomb[x][y]) {
                         table.classList.add("synth-lose")
                         revealAll()
