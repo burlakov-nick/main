@@ -2,35 +2,51 @@ const n = 9, m = 9, bombsCount = 10
 const dx = [-1, 1, 0, 0, -1, 1, -1, 1]
 const dy = [0, 0, -1, 1, -1, -1, 1, 1]
 
-function shuffle(array) {
-    for (let i = array.length - 1; i > 0; i--) {
-        let j = Math.floor(Math.random() * (i + 1));
-        let temp = array[i];
-        array[i] = array[j];
-        array[j] = temp;
-    }
-}
+let bombs = Array(n).fill([]).map((_) => Array(m).fill(0));
+let isBomb = Array(n).fill([]).map((_) => Array(m).fill(false));
 
-let isBomb = Array(n * m).fill(false).fill(true, 0, bombsCount)
-shuffle(isBomb)
-isBomb = Array(n).fill([]).map((_, i) => Array(m).fill(false).map((_, j) => isBomb[i * m + j]));
-
-function countBombs(x, y) {
-    let count = 0
-    for (let i = 0; i < 8; i++) {
-        let nx = x + dx[i]
-        let ny = y + dy[i]
-        if (isInside(nx, ny) && isBomb[nx][ny]) {
-            count += 1
-        }
-    }
-    return count
-}
-
-let bombs = Array(n).fill([]).map((_, i) => Array(m).fill(false).map((_, j) => countBombs(i, j)));
 let markedAsBomb = Array(n).fill([]).map((_) => Array(m).fill(false))
 let revealed = Array(n).fill([]).map((_) => Array(m).fill(false))
 let markedAsBombCount = 0
+let isFirstClick = true
+
+function placeBombs() {
+    function shuffle(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            let j = Math.floor(Math.random() * (i + 1));
+            let temp = array[i];
+            array[i] = array[j];
+            array[j] = temp;
+        }
+    }
+
+    function countBombs(x, y) {
+        let count = 0
+        for (let i = 0; i < 8; i++) {
+            let nx = x + dx[i]
+            let ny = y + dy[i]
+            if (isInside(nx, ny) && isBomb[nx][ny]) {
+                count += 1
+            }
+        }
+        return count
+    }
+
+    let flatBombs = Array(n * m).fill(false).fill(true, 0, bombsCount)
+    shuffle(flatBombs)
+
+    for (let i = 0; i < n; i ++) {
+        for (let j = 0; j < m; j ++) {
+            isBomb[i][j] = flatBombs[i * m + j]
+        }
+    }
+
+    for (let i = 0; i < n; i ++) {
+        for (let j = 0; j < m; j ++) {
+            bombs[i][j] = countBombs(i, j)
+        }
+    }
+}
 
 function getId(x, y) {
     return `${x}_${y}`
@@ -103,6 +119,8 @@ function isWin() {
 }
 
 function initGame() {
+    placeBombs()
+
     let mineField = document.getElementById("mine-field");
     let table = document.createElement("div")
     table.className = "synth-container"
@@ -129,6 +147,10 @@ function initGame() {
                         table.classList.add("synth-win")
                     }
                 } else {
+                    while (isFirstClick && isBomb[x][y]) {
+                        placeBombs()
+                    }
+                    isFirstClick = false
                     if (isBomb[x][y]) {
                         table.classList.add("synth-lose")
                         revealAll()
